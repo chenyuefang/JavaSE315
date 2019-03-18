@@ -20,3 +20,4 @@ public class Year {
         System.out.println(year + " is leap year: " + year1.isLeapYear(year));
     }
 }
+
