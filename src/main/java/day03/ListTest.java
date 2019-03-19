@@ -26,5 +26,7 @@ public class ListTest {
 
         Vector<Integer> integers = new Vector<>();
         System.out.println(integers.capacity());
+
+
     }
 }
