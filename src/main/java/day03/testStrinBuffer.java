@@ -1,9 +1,6 @@
 package day03;
 
-import java.util.Arrays;
-
-public class StringStringBuffer {
-
+public class testStrinBuffer {
     public static void main(String[] args) {
 
         char[] chars = new char[26];
