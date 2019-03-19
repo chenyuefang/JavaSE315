@@ -57,7 +57,7 @@ public class E337 {
         }
 
         public int compareTo(Record o) {
-            return Collator.getInstance(Locale.CHINESEH).compare(this.name,o.getName());
+            return Collator.getInstance(Locale.CHINESE).compare(this.name,o.getName());
         }
 
     }
