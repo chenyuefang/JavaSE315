@@ -15,6 +15,9 @@ public class StringBuffer {
 
         // String 不可变的 降低运行速度
         // StringBuffer 可变的
+
+
+
     }
 }
 
