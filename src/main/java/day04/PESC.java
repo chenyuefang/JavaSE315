@@ -14,6 +14,6 @@ public class PESC <N extends Number> { // N的类型只能是Number
         PESC<Double> p2 = new PESC<>();
         p2.print(1.1, 2.2);
 
-//        PECS<String> p3 = new PECS<>();
+//        PECS<String> p3 = new PECS<>(); // String 类型不属于Number里面
     }
 }
