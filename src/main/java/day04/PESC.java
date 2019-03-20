@@ -1,6 +1,6 @@
 package day04;
 
-public class PESC <N extends Number> { // N的类型只能是Number
+public class PESC <N extends Number> { // N的延展类型只能是Number
 
     private void print(N n1, N n2) {
         System.out.println(n1);
@@ -14,6 +14,6 @@ public class PESC <N extends Number> { // N的类型只能是Number
         PESC<Double> p2 = new PESC<>();
         p2.print(1.1, 2.2);
 
-//        PECS<String> p3 = new PECS<>(); // String 类型不属于Number里面
+//        PECS<String> p3 = new PECS<>(); // String 类型不属于Number
     }
 }
