@@ -16,7 +16,6 @@ public class ExceptionTest {
 //        NullPointerException NPE
         //空指针异常  java.lang.NullPointerException
 
-
         String s = "hello";
         s = null;
         try {  // try 中的语句不会被执行
