@@ -25,7 +25,7 @@ public class ExceptionTest {
             System.out.println("in try block...");
         } catch (ArithmeticException e) {
             // 捕捉到异常则会执行catch中的语句
-//            e.printStackTrace();
+//            e.printStackTrace(); // 显示异常
             System.out.println("NPE...");
         } finally {
             //  finally 中的语句总会被输出，除非程序在finally 之前结束
