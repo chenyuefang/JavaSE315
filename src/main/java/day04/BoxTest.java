@@ -12,5 +12,6 @@ public class BoxTest {
         System.out.println(sum);
 
         System.out.println(System.currentTimeMillis() - start);
+        // 程序运行的时间
     }
 }
