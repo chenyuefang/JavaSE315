@@ -5,6 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * OutputStream : 基于字节的输出流
+ */
+
 class OutputStreamTest {
     public static void main(String[] args) {
         try(OutputStream outputStream = new FileOutputStream("output_stream.txt")) {

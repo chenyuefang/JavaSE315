@@ -4,6 +4,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
+/**
+ * 基于字符的输入流
+ */
+
 public class ReaderTest {
     public static void main(String[] args) {
         try (Reader reader = new FileReader("src/main/java/day05/ReaderTest.java");) {

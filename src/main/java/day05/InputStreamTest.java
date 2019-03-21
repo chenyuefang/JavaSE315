@@ -3,7 +3,7 @@ package day05;
 import java.io.*;
 
 /**
- *  输入流
+ *  基于字节的输入流
  *  Reader -> FileReader -> method
  */
 
