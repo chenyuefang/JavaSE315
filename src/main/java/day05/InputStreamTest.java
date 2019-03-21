@@ -1,9 +1,6 @@
 package day05;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  *  输入流
@@ -22,9 +19,17 @@ public class InputStreamTest {
 
             InputStream inputStream =new FileInputStream(NAME);
             int i=inputStream.read();
+
+            FileReader inputStream1 =new FileReader(NAME);
+            int j=inputStream1.read();
+
             while (i!=-1) {
-                System.out.print((char) i);
-                i=inputStream.read();  // 读取全部文件，但无法读取汉字，汉字占据两个字节
+                //System.out.print((char) i);
+                //i=inputStream.read();  // 读取全部文件，但无法读取汉字，汉字占据两个字节
+
+                System.out.println((char) j);
+                j=inputStream1.read();
+
             }
 
         } catch (IOException e) {
