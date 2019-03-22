@@ -1,11 +1,10 @@
 package day06;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 
 public class RAFTest {
 
-    public static void main(String[] args) {
+    public static void raf (){
         try (RandomAccessFile randomAccessFile = new RandomAccessFile("raf", "rw"))
         // r : 若文本存在则读取文本，不存在就会报错   //  rw : 读加写，不存在会自动创建文本
         {
@@ -17,6 +16,23 @@ public class RAFTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+
+        try (
+                DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream("io"));
+                DataInputStream dataInputStream = new DataInputStream(new FileInputStream("io"))
+        ) {
+            for (int i = 0; i < 10; i++) {
+                dataOutputStream.writeDouble(i * 0.5);
+            }
+            dataInputStream.skipBytes(8); // skipBytes : 跳过字节数
+            System.out.println(dataInputStream.readDouble());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
 
