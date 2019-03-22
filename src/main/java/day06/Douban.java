@@ -6,6 +6,10 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * 在豆瓣网上下载图片的路径
+ */
+
 public class Douban {
     private static final String DOUBAN_URL = "https://book.douban.com/tag/%E5%B0%8F%E8%AF%B4";
 
