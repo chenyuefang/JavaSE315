@@ -10,7 +10,7 @@ public class MT2 implements Runnable {
         MT2 mt2 = new MT2();
         Thread thread = new Thread(mt2);
         thread.start();  // 开始一个线程
-//        Thread.sleep(1); // 线程休眠一毫秒
+//        Thread.sleep(1); // 主线程休眠一毫秒
         System.out.println("test...");
     }
 
