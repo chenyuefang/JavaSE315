@@ -10,17 +10,58 @@ import java.net.URL;
  * 在豆瓣网上下载图片的路径
  */
 
-public class Douban {
+
+/**
+ *   mutithreading 多线程
+ */
+
+public class Douban extends Thread {
     private static final String DOUBAN_URL = "https://book.douban.com/tag/小说?start=";
     private static int counter;
+    private int page;
 
-    public static void main(String[] args) throws IOException {
-        for (int i = 0; i < 383; i++) {
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public static void main(String[] args)  throws InterruptedException {
+        long begin = System.currentTimeMillis();
+      //  for (int i = 0; i < 383; i++) {
+        //    int start = i * 20;
+            //    System.out.println("download page: " + (i + 1));
+           // downloadPage(DOUBAN_URL + start);
+       // }
+
+        for (int i = 0; i < 5; i++) {
+            
+            Douban t = new Douban();
+            t.setPage(10*i);
+            t.start();
+            t.join(); // 等待其他线程运行
+        }
+        System.out.println("total time : " + (System.currentTimeMillis() - begin ) + "ms.");
+    }
+
+    @Override
+    public void run() {
+        System.out.println(Thread.currentThread().getId() + " running...");
+
+        for (int i = getPage(); i < getPage() + 10; i++) {
             int start = i * 20;
             System.out.println("download page: " + (i + 1));
-            downloadPage(DOUBAN_URL + start);
+            try {
+                downloadPage(DOUBAN_URL + start);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
+
+
 
     private static void download(String imgUrl) throws IOException {
         URL url = new URL(imgUrl);
