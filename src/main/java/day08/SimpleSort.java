@@ -2,7 +2,7 @@ package day08;
 
 import java.util.Arrays;
 
-public class SimpleSort {
+public class SimpleSort { // 简单选择排序 ： 从未排序序列中，找到关键字最小的元素
 
     public static void main(String[] args) {
 
@@ -55,7 +55,6 @@ public class SimpleSort {
  *         }//endfor
  *     }//endsort
  *     public static void main(String[] args) {
- *         //在JDK1.5版本以上,基本数据类型可以自动装箱
  *         //int,double等基本类型的包装类已实现了Comparable接口
  *         Comparable[] c={4,9,23,1,45,27,5,2};
  *         sort(c);

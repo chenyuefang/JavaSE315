@@ -2,7 +2,8 @@ package day08;
 
 import java.util.Arrays;
 
-public class StraightInsertionSort { // 直接插入排序
+public class StraightInsertionSort { // 直接插入排序  ：从第一个元素开始，该元素可以认为已经被排序，
+                                         // 后面的的元素依次与其进行比较，若小于它则交换
 
     public static void main(String[] args) {
 
