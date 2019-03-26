@@ -33,59 +33,17 @@ public class BubbleSort {
         System.out.println(Arrays.toString(ints)); // 输出随机的数组
         // Arrays.toString(ints) 字符串形式的数组
         // 算法
-        /**  for (int i = 0; i < ints.length; i++) {
-         for (int j = 0; j < ints.length - 1 - i; j++) {
-         if (ints[j + 1] < ints[j]) {
-         int temp = ints[j];
-         ints[j] = ints[j + 1];
-         ints[j + 1] = temp;
-         }
-         }
-         }  // 冒泡排序
-         */
-
-
-        /**
         for (int i = 0; i < ints.length; i++) {
-            int min = i;
-            for (int j = i + 1; j < ints.length; j++) {
-                if (ints[j] < ints[i]) {
-                    min = ints[j];
+            for (int j = 0; j < ints.length - 1 - i; j++) {
+                if (ints[j + 1] < ints[j]) {
+                    int temp = ints[j];
+                    ints[j] = ints[j + 1];
+                    ints[j + 1] = temp;
                 }
-            }  //  选出之后待排序中值最小的位置
-            if (min != i) {
-                int temp = ints[i];
-                ints[i] = ints[min];
-                ints[min] = temp;
-            }  // 只要小于之前被选出位置对应的值，就交换
-        }    // 简单选择排序
+            }
+        }  // 冒泡排序
 
-         */
-        int low;
-        int high;
-        //已经排完
-        if (low >= high) {
-            return;
-        }
-        int left = low;
-        int right = high;
 
-        //保存基准值
-        int pivot =ints[left];
-        while (left < right) {
-            //从后向前找到比基准小的元素
-            while (left < right && ints[right] >= pivot)
-                right--;
-           ints[left] =ints[right];
-            //从前往后找到比基准大的元素
-            while (left < right &&ints[left] <= pivot)
-                left++;
-            ints[right] = ints[left];
-        }
-        // 放置基准值，准备分治递归快排
-        ints[left] = pivot;
-        sort(a, low, left - 1);
-        sort(a, left + 1, high);
 
 
         System.out.println(Arrays.toString(ints));// 输出排序后的数组
