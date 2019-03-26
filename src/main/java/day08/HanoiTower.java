@@ -2,6 +2,8 @@ package day08;
 
 import java.util.Scanner;
 
+// 求解汉诺塔 n 圆盘移动步骤
+
 public class HanoiTower {
 
     private static void Hanoi(int n) {
