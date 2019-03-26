@@ -1,13 +1,11 @@
 package day08;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import sun.net.ProgressSource;
+
+import java.sql.*;
 
 //  JDBC - Java DataBase Connectivity
 
-import java.sql.Driver;
 
 public class JDBC {
 
@@ -23,18 +21,13 @@ public class JDBC {
         Connection connection = DriverManager.getConnection(URL,User,PASSWORD);
 
         //3.PrepareStatement
-        String sql = "insert into db_test.user value (null,?,md5(?))";
-        PreparedStatement preparedStatement =connection.prepareStatement(sql);
-        preparedStatement.setString(1,"Tom");
-        preparedStatement.setString(2, "123");
+        String sql = "create database sdfas;";
+        String sl = "show databases";
 
-        // 4.1 p.executeUpdate(); // DML
-        preparedStatement.executeUpdate();
+        Statement statement = connection.createStatement();
 
-        // 4.2 p.executeQuery(); // DQL
+        statement.execute(sql);
 
-        //5. *.close();
-        preparedStatement.close();
         connection.close();
         System.out.println("done.");
     }
