@@ -126,7 +126,9 @@ public class MySqlCommandLine {
     }
 }
 /**
-        mySqlCommandLine.getConnection();
+        mySqlCommandLine.getConnection(); // 获得数据库的连接
+
+ //  PreparedStatement 与  Statement  均可完成数据库的查询
 
        //PreparedStatement
 
