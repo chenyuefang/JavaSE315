@@ -109,7 +109,7 @@ public class MySqlCommandLine {
     public static void main(String[] args) {
       //  Scanner scanner = new Scanner(System.in);
       //  System.out.println("input SQL statement: ");
-       // String sql = scanner.nextLine();
+       // String sql = scanner.nextLine(); // 在主方法是创建一次，便可直接调用
         MySqlCommandLine mySqlCommandLine = new MySqlCommandLine();
         String sql = mySqlCommandLine.getSQL();
         while (!sql.equalsIgnoreCase("quit")) { // 语句若是“quit"，就执行结束，若不是”quit“ ，便继续执行，并显示"mysql> "
@@ -128,17 +128,17 @@ public class MySqlCommandLine {
         String password = ""123;
 
      2.Statement
-        String username = "' or 'a'='a";   // SQL Injection 注入
+        String username = "' or 'a'='a";   // SQL Injection 注入 ， 是Statement 中的漏洞
         String password = "' or 'a'='a";
 
        1.PreparedStatement :
 
-        String sql1 = "select * from db_test.user where username = ? and password = ?";
+        String sql1 = "select * from db_test.user where username = ? and password = md5("?"); // md5() : 密码加密
         PreparedStatement preparedStatement = connection.prepareStatement(sql1);
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, password);
         ResultSet resultSet1 = preparedStatement.executeQuery();
-        System.out.println(resultSet1.next()); // true 用户可以登录
+        System.out.println(resultSet1.next()); // true  ： 用户名以及密码必须全部正确，用户可以登录
 
        2.Statement  ： 语句中不能带有任何的未知数，需用字符串的拼接，（会存在安全隐患，不建议使用）
 
@@ -146,6 +146,6 @@ public class MySqlCommandLine {
         System.out.println(sql2);
         Statement statement = connection.createStatement();
         ResultSet resultSet2 = statement.executeQuery(sql2);
-        System.out.println(resultSet2.next());
+        System.out.println(resultSet2.next()); // 随便输入程序也会显示 true ，是 Statement 中无法避免的漏洞
         */
 }
