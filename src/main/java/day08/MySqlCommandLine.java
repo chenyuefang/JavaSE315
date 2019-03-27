@@ -75,11 +75,16 @@ public class MySqlCommandLine {
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData(); // 数据库的元数据
             System.out.println(resultSetMetaData.getColumnCount());            // 3 ：显示数据库一共有几列元素
             System.out.println(resultSetMetaData.getColumnClassName(1));       // java.lang.Integer
-            System.out.println(resultSetMetaData.getColumnDisplaySize(1));     // 11
+            System.out.println(resultSetMetaData.getColumnDisplaySize(1));     // 11 ：第一列元素的长度
             System.out.println(resultSetMetaData.getColumnLabel(1));           // id
-            System.out.println(resultSetMetaData.getColumnName(1));            // id
-            System.out.println(resultSetMetaData.getColumnType(1));            // 4
-            System.out.println(resultSetMetaData.getColumnTypeName(1));        // INT
+            System.out.println(resultSetMetaData.getColumnName(1));            // id ：第一列元素名称
+            System.out.println(resultSetMetaData.getColumnType(1));            // 4 ：第一列元素
+            System.out.println(resultSetMetaData.getColumnTypeName(1));        // INT ：第一列元素类型名
+
+            while (resultSet.next()) {
+                // TODO: 2019/3/27 数据库的列数是未知的 ， 用ResultSetMetaData处理
+                System.out.println(resultSet.getString(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -95,8 +100,10 @@ public class MySqlCommandLine {
     }
 
     public  String getSQL() {
-        System.out.println("input SQL statement: ");
-        return scanner.nextLine();
+        System.out.print("mysql> ");// 语句执行以"mysql> "开始，用户在"mysql> "后输入执行语句
+        String sql = scanner.nextLine();
+        // TODO: 2019/3/27 sql.endsWith(";"); 如何做到以“；”作为结束标志
+        return sql;
     }
 
     public static void main(String[] args) {
@@ -105,6 +112,40 @@ public class MySqlCommandLine {
        // String sql = scanner.nextLine();
         MySqlCommandLine mySqlCommandLine = new MySqlCommandLine();
         String sql = mySqlCommandLine.getSQL();
-        mySqlCommandLine.dispatch(sql);
+        while (!sql.equalsIgnoreCase("quit")) { // 语句若是“quit"，就执行结束，若不是”quit“ ，便继续执行，并显示"mysql> "
+            mySqlCommandLine.dispatch(sql);
+            sql = mySqlCommandLine.getSQL();
     }
+}
+/**
+        mySqlCommandLine.getConnection();
+
+       //PreparedStatement
+
+        // 用户在登录表单填写的值
+     1.PreparedStatement
+        String username = "Tom";
+        String password = ""123;
+
+     2.Statement
+        String username = "' or 'a'='a";   // SQL Injection 注入
+        String password = "' or 'a'='a";
+
+       1.PreparedStatement :
+
+        String sql1 = "select * from db_test.user where username = ? and password = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql1);
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
+        ResultSet resultSet1 = preparedStatement.executeQuery();
+        System.out.println(resultSet1.next()); // true 用户可以登录
+
+       2.Statement  ： 语句中不能带有任何的未知数，需用字符串的拼接，（会存在安全隐患，不建议使用）
+
+        String sql2 = "select * from db_test.user where username = '" + username + "' and password = '" + password + "'";
+        System.out.println(sql2);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet2 = statement.executeQuery(sql2);
+        System.out.println(resultSet2.next());
+        */
 }
