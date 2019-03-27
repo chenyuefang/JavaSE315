@@ -20,6 +20,8 @@ public class MySqlCommandLine {
     private static final String name = "root";
     private static final String password = "123456";
     private Connection connection;
+    private  PreparedStatement preparedStatement; // 可做查询的语句
+    private  ResultSet resultSet; // 结果集 用来接收查询的结果
     private static  Scanner scanner;
     private  static  SimpleDateFormat simpleDateFormat;
 
@@ -60,8 +62,27 @@ public class MySqlCommandLine {
         }
     }
 
+    /**
+     * DQL: select
+     *
+     * @param sql statement
+     */
+
     public void query(String sql) {  // .executeQuery(); -- DQL：insert
-        // TODO: 2019/3/27  具体操作
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery(); // 接收结果
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData(); // 数据库的元数据
+            System.out.println(resultSetMetaData.getColumnCount());            // 3 ：显示数据库一共有几列元素
+            System.out.println(resultSetMetaData.getColumnClassName(1));       // java.lang.Integer
+            System.out.println(resultSetMetaData.getColumnDisplaySize(1));     // 11
+            System.out.println(resultSetMetaData.getColumnLabel(1));           // id
+            System.out.println(resultSetMetaData.getColumnName(1));            // id
+            System.out.println(resultSetMetaData.getColumnType(1));            // 4
+            System.out.println(resultSetMetaData.getColumnTypeName(1));        // INT
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
