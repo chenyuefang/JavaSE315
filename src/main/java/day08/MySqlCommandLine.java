@@ -44,6 +44,13 @@ public class MySqlCommandLine {
         return connection;
     }
 
+    /**
+     * DDL: create alter drop truncate
+     * DML: insert update delete
+     *
+     * @param sql statement
+     */
+
     public void update(String sql) {  // .executeUpdate(); -- DDL：（create、alter、drop、表间连接）  DML: （insert、update、delete）
         // TODO: 2019/3/27  具体操作
 
@@ -58,7 +65,8 @@ public class MySqlCommandLine {
             System.out.print(simpleDateFormat.format(new Date(end )));// 结束时系统的时间
             System.out.println(rowAffected  +  "row affected in " + (end - start) + "ms"); // end - start : 运行的时间
         } catch (SQLException e) {
-            e.printStackTrace();
+           // e.printStackTrace(); 显示详细错误，信息过多
+            System.out.println("ERROR: " + e.getMessage()); // e.getMessage()： 简化错误信息
         }
     }
 
