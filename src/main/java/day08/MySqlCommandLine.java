@@ -42,7 +42,7 @@ public class MySqlCommandLine {
         return connection;
     }
 
-    public void update(String sql) {
+    public void update(String sql) {  // .executeUpdate(); -- DDL：（create、alter、drop、表间连接）  DML: （insert、update、delete）
         // TODO: 2019/3/27  具体操作
 
         PreparedStatement preparedStatement;
@@ -53,14 +53,14 @@ public class MySqlCommandLine {
             int rowAffected = preparedStatement.executeUpdate();// 更新时受影响的行数
             long end = System.currentTimeMillis();
 
-            System.out.println(simpleDateFormat.format(new Date(end )));// 结束时系统的时间
+            System.out.print(simpleDateFormat.format(new Date(end )));// 结束时系统的时间
             System.out.println(rowAffected  +  "row affected in " + (end - start) + "ms"); // end - start : 运行的时间
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void query(String sql) {
+    public void query(String sql) {  // .executeQuery(); -- DQL：insert
         // TODO: 2019/3/27  具体操作
 
     }
