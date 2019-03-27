@@ -81,7 +81,16 @@ public class MySqlCommandLine {
         try {
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery(); // 接收结果
+
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData(); // 数据库的元数据
+            // System.out.println(resultSetMetaData.getColumnCount());            // 3 ：显示数据库一共有几列元素
+            //   System.out.println(resultSetMetaData.getColumnClassName(1));       // java.lang.Integer
+            //   System.out.println(resultSetMetaData.getColumnDisplaySize(1));     // 11 ：第一列元素的长度
+            //   System.out.println(resultSetMetaData.getColumnLabel(1));           // id  ：字段名
+            //   System.out.println(resultSetMetaData.getColumnName(1));            // id ：第一列元素名称
+            //   System.out.println(resultSetMetaData.getColumnType(1));            // 4 ：第一列元素
+            //   System.out.println(resultSetMetaData.getColumnTypeName(1));        // INT ：第一列元素类型名
+
             int columCount = resultSetMetaData.getColumnCount();  // getColumnCount() 获取当前列数
 
             for (int i = 0; i < columCount; i++) {
@@ -92,7 +101,7 @@ public class MySqlCommandLine {
 
             while (resultSet.next()) {
                 for (int i = 0; i < columCount; i++) {
-                    System.out.println(resultSet.getString(i+1) + " ");
+                    System.out.println(resultSet.getString(i + 1) + " ");
                 }
                 System.out.println();
             }
@@ -103,9 +112,22 @@ public class MySqlCommandLine {
 
     }
 
+    public void insert(String sql) { //  插入语句
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void dispatch(String sql) {
         if (sql.toLowerCase().trim().startsWith("select")) { // toLowerCase(): 小写  trim() : 空格处理
             query(sql);
+        } else if (sql.toLowerCase().trim().startsWith("insert")) {
+
+            insert(sql);
         } else {
             update(sql);
         }
@@ -117,7 +139,7 @@ public class MySqlCommandLine {
         //如何做到以“；”作为结束标志
         StringBuilder sql = new StringBuilder(line);
         while (!line.endsWith(";")) { //   直到最后以“；”结尾结束循环，正常执行
-            System.out.println("    -> ");  // 不是以“；”结尾，就用"    -> " 另起一行，
+            System.out.print("    -> ");  // 不是以“；”结尾，就用"    -> " 另起一行，
             line = scanner.nextLine(); // 接收后面行的语句
             sql.append(line); // 字符串的拼接
         }
@@ -169,10 +191,3 @@ public class MySqlCommandLine {
  System.out.println(resultSet2.next()); // 随便输入程序也会显示 true ，是 Statement 中无法避免的漏洞
  */
 }
-// System.out.println(resultSetMetaData.getColumnCount());            // 3 ：显示数据库一共有几列元素
-//   System.out.println(resultSetMetaData.getColumnClassName(1));       // java.lang.Integer
-//   System.out.println(resultSetMetaData.getColumnDisplaySize(1));     // 11 ：第一列元素的长度
-//   System.out.println(resultSetMetaData.getColumnLabel(1));           // id  ：字段名
-//   System.out.println(resultSetMetaData.getColumnName(1));            // id ：第一列元素名称
-//   System.out.println(resultSetMetaData.getColumnType(1));            // 4 ：第一列元素
-//   System.out.println(resultSetMetaData.getColumnTypeName(1));        // INT ：第一列元素类型名
