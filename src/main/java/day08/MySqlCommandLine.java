@@ -83,14 +83,6 @@ public class MySqlCommandLine {
             resultSet = preparedStatement.executeQuery(); // 接收结果
 
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData(); // 数据库的元数据
-            // System.out.println(resultSetMetaData.getColumnCount());            // 3 ：显示数据库一共有几列元素
-            //   System.out.println(resultSetMetaData.getColumnClassName(1));       // java.lang.Integer
-            //   System.out.println(resultSetMetaData.getColumnDisplaySize(1));     // 11 ：第一列元素的长度
-            //   System.out.println(resultSetMetaData.getColumnLabel(1));           // id  ：字段名
-            //   System.out.println(resultSetMetaData.getColumnName(1));            // id ：第一列元素名称
-            //   System.out.println(resultSetMetaData.getColumnType(1));            // 4 ：第一列元素
-            //   System.out.println(resultSetMetaData.getColumnTypeName(1));        // INT ：第一列元素类型名
-
             int columCount = resultSetMetaData.getColumnCount();  // getColumnCount() 获取当前列数
 
             for (int i = 0; i < columCount; i++) {
@@ -150,7 +142,7 @@ public class MySqlCommandLine {
         //  Scanner scanner = new Scanner(System.in);
         //  System.out.println("input SQL statement: ");
         // String sql = scanner.nextLine(); // 在主方法是创建一次，便可直接调用
-        MySqlCommandLine mySqlCommandLine = new MySqlCommandLine();
+        day08.Server mySqlCommandLine = new day08.Server();
         String sql = mySqlCommandLine.getSQL();
         while (!sql.equalsIgnoreCase("quit")) { // 语句若是“quit"，就执行结束，若不是”quit“ ，便继续执行，并显示"mysql> "
             mySqlCommandLine.dispatch(sql);
