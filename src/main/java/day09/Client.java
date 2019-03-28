@@ -5,6 +5,11 @@ package day09;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 
 public class Client extends JFrame {
 
@@ -12,6 +17,8 @@ public class Client extends JFrame {
     private JTable resultJTable;
     private JScrollPane sqlJScrollPane, outputJScrollPane, resultJScrollPane;
     private JPanel southJPanel, main;
+    static DefaultTableModel defaultTableModel;
+    private Server server;
 
     private Client() {
         initComponent();
@@ -93,8 +100,23 @@ public class Client extends JFrame {
     /**
      * 初始化监听器
      */
-    private void initListener() {
-
+    private void initListener() {  // 事件的实现
+        // shortcut
+        KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, KeyEvent.CTRL_DOWN_MASK);  // 点击快捷键 Ctrl+Enter，触发事件
+        sqlJTextArea.getInputMap().put(keyStroke, "Execute");
+        sqlJTextArea.getActionMap().put("Execute", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sql = sqlJTextArea.getSelectedText();
+                String output = server.dispatch(sql);
+                if (output != null) {
+                    outputJTextArea.append(output + "\n");
+                }
+                if (defaultTableModel != null) {
+                    resultJTable.setModel(defaultTableModel);
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
