@@ -1,69 +1,99 @@
+
+
 package day09;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class Client  extends JFrame implements ActionListener {
+public class Client extends JFrame {
 
-    public  Client() {
+    private JTextArea sqlJTextArea, outputJTextArea;
+    private JTable resultJTable;
+    private JScrollPane sqlJScrollPane, outputJScrollPane, resultJScrollPane;
+    private JPanel southJPanel, main;
+
+    private Client() {
         initComponent();
+        initListener();
     }
 
+    /**
+     * 初始化组件
+     */
     private void initComponent() {
+//        1. 全局设置
+        setTitle("MySQL Client");
+        setExtendedState(MAXIMIZED_BOTH);
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize(); // 获取最大屏幕
+        int width = dimension.width;
+        int height = dimension.height;
+        Font font = new Font("consolas", Font.PLAIN, 24);
 
-        setTitle("MySQL Client"); // 设置标题
-        setExtendedState(MAXIMIZED_BOTH); // 整个屏幕
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize(); // 大小
-        Font font =new Font("consolas", Font.PLAIN, 24); // 字形
+//        2. SQL
+        sqlJTextArea = new JTextArea();  // SQL 的文本输入域
+        sqlJTextArea.setBackground(Color.darkGray);
+        sqlJTextArea.setForeground(Color.WHITE);
+        sqlJTextArea.setFont(font);
+        sqlJTextArea.setCaretColor(Color.WHITE); // 设置光标的颜色
+        sqlJTextArea.setCaretPosition(sqlJTextArea.getDocument().getLength()); // 设置光标的位置 ： sqlJTextArea.getDocument().getLength() SQL文本输入域中获取的文档的最后
 
-        JPanel main = new JPanel(); // 主页面
+        sqlJScrollPane = new JScrollPane(sqlJTextArea);  // 滚动条 添加在 SQL文本输入域上
+        sqlJScrollPane.setPreferredSize(new Dimension(width, height / 2));
+
+//        3. output
+        outputJTextArea = new JTextArea();
+        outputJTextArea.setBackground(Color.WHITE);
+        outputJTextArea.setFont(font);
+        outputJTextArea.setEditable(false);  // 结果输出域不可编辑
+
+        outputJScrollPane = new JScrollPane(outputJTextArea);  // 滚动条添加在结果输出域上
+        outputJScrollPane.setPreferredSize(new Dimension(width / 2, (int) (height / 2.5)));
+
+//        4. result
+        String[] columnsNames = {
+                "ID",
+                "USERNAME",
+                "PASSWORD"
+        };
+        String[][] data = {
+                {"1", "Tom", "123"},
+                {"2", "Jerry", "abc"}
+        };
+        DefaultTableModel defaultTableModel = new DefaultTableModel(data, columnsNames); //  输出表格的实例  ，data, columnsNames ： 二维数组 、一维数组
+
+        resultJTable = new JTable(defaultTableModel); // 结果集，以表格的形式展示
+        resultJTable.setBackground(Color.WHITE);
+        resultJTable.setFont(font);
+        resultJTable.getTableHeader().setFont(font);  //  设置表格的字体
+        resultJTable.setRowHeight(30);              // 设置表格的行高
+
+        resultJScrollPane = new JScrollPane(resultJTable);  // 滚动条添加在结果集上
+        resultJScrollPane.setPreferredSize(new Dimension(width / 2, (int) (height / 2.5)));
+
+        southJPanel = new JPanel();
+        southJPanel.setLayout(new BorderLayout());
+        southJPanel.setPreferredSize(new Dimension(width, (int) (height / 2.5)));
+
+        southJPanel.add(outputJScrollPane, BorderLayout.WEST);   // 结果输出域的滚动条放在屏幕下半部分的左边
+        southJPanel.add(resultJScrollPane, BorderLayout.EAST);   // 结果表格集的滚动条放在屏幕下半部分的右边
+//        5. main
+        main = new JPanel();  // 整体的屏幕布局
         main.setLayout(new BorderLayout());
 
-        TextArea sqlTextArea = new TextArea(); // SQL文本区域
-        sqlTextArea.setPreferredSize(new Dimension(dimension.width,dimension.height /2));
-        sqlTextArea.setFont(font);
-        sqlTextArea.setForeground(Color.WHITE);
-        sqlTextArea.setBackground(Color.darkGray);
+        // 屏幕整体分为上下两个部分，
+        main.add(sqlJScrollPane, BorderLayout.NORTH); //  sqlJScrollPane : 属于屏幕的上半部分
+        main.add(southJPanel, BorderLayout.SOUTH);    // southJPanel ：属于屏幕的下半部分
 
-        JPanel north = new JPanel();   // 屏幕上半部分
-        north.setPreferredSize(new Dimension(dimension.width,dimension.height / 2)); // 占整个屏幕的一半
-
-        north.add(sqlTextArea);  // 屏幕上半部分 显示SQL文本域
-
-
-        JPanel south = new JPanel(); // 屏幕下半部分
-        south.setLayout(new BorderLayout());
-        south.setBackground(Color.WHITE);
-        south.setPreferredSize(new Dimension(dimension.width,dimension.height / 2));
-
-        TextArea outputTextArea = new TextArea();  // 文本区域 输出结果
-        outputTextArea.setBackground(Color.WHITE);
-        outputTextArea.setPreferredSize(new Dimension(dimension.width / 2, dimension.height / 2));
-        outputTextArea.setEditable(false);  // 不可编辑
-
-        String[] columnNames = {"ID", "USERNAME", "PASSWORD"};
-        Object[][] rowData = {
-                {1, "Tom", "123"},
-                {2, "Jerry", "abc"}
-        };
-
-        JTable resultTable = new JTable(rowData, columnNames); // 结果显示
-        resultTable.setBackground(Color.WHITE);
-        resultTable.setPreferredSize(new Dimension(dimension.width / 2, dimension.height / 2));
-
-        south.add(outputTextArea, BorderLayout.WEST); // 左下部分显示输出文本域
-        south.add(resultTable, BorderLayout.EAST);  //  右下部分显示结果表格
-
-        main.add(north, BorderLayout.NORTH);
-        main.add(south, BorderLayout.SOUTH);
+//        6. show
         add(main);
         setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    /**
+     * 初始化监听器
+     */
+    private void initListener() {
 
     }
 
@@ -71,3 +101,4 @@ public class Client  extends JFrame implements ActionListener {
         new Client();
     }
 }
+
