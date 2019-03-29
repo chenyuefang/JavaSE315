@@ -7,16 +7,12 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 
 public class Client extends JFrame {
 
     private JTextArea sqlJTextArea, outputJTextArea;
     private JTable resultJTable;
-    private JScrollPane sqlJScrollPane, outputJScrollPane, resultJScrollPane;
-    private JPanel southJPanel, main;
     static DefaultTableModel defaultTableModel;
     private Server server;
 
@@ -45,7 +41,7 @@ public class Client extends JFrame {
         sqlJTextArea.setCaretColor(Color.WHITE); // 设置光标的颜色
         sqlJTextArea.setCaretPosition(sqlJTextArea.getDocument().getLength()); // 设置光标的位置 ： sqlJTextArea.getDocument().getLength() SQL文本输入域中获取的文档的最后
 
-        sqlJScrollPane = new JScrollPane(sqlJTextArea);  // 滚动条 添加在 SQL文本输入域上
+        JScrollPane sqlJScrollPane = new JScrollPane(sqlJTextArea);  // 滚动条 添加在 SQL文本输入域上
         sqlJScrollPane.setPreferredSize(new Dimension(width, height / 2));
 
 //        3. output
@@ -54,7 +50,7 @@ public class Client extends JFrame {
         outputJTextArea.setFont(font);
         outputJTextArea.setEditable(false);  // 结果输出域不可编辑
 
-        outputJScrollPane = new JScrollPane(outputJTextArea);  // 滚动条添加在结果输出域上
+        JScrollPane outputJScrollPane = new JScrollPane(outputJTextArea);  // 滚动条添加在结果输出域上
         outputJScrollPane.setPreferredSize(new Dimension(width / 2, (int) (height / 2.5)));
 
 //        4. result
@@ -74,18 +70,19 @@ public class Client extends JFrame {
         resultJTable.setFont(font);
         resultJTable.getTableHeader().setFont(font);  //  设置表格的字体
         resultJTable.setRowHeight(30);              // 设置表格的行高
+        resultJTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);  // 设置结果集表格的列宽
 
-        resultJScrollPane = new JScrollPane(resultJTable);  // 滚动条添加在结果集上
+        JScrollPane resultJScrollPane = new JScrollPane(resultJTable);  // 滚动条添加在结果集上
         resultJScrollPane.setPreferredSize(new Dimension(width / 2, (int) (height / 2.5)));
 
-        southJPanel = new JPanel();
+        JPanel southJPanel = new JPanel();
         southJPanel.setLayout(new BorderLayout());
         southJPanel.setPreferredSize(new Dimension(width, (int) (height / 2.5)));
 
         southJPanel.add(outputJScrollPane, BorderLayout.WEST);   // 结果输出域的滚动条放在屏幕下半部分的左边
         southJPanel.add(resultJScrollPane, BorderLayout.EAST);   // 结果表格集的滚动条放在屏幕下半部分的右边
 //        5. main
-        main = new JPanel();  // 整体的屏幕布局
+        JPanel main = new JPanel();  // 整体的屏幕布局
         main.setLayout(new BorderLayout());
 
         // 屏幕整体分为上下两个部分，
@@ -103,23 +100,26 @@ public class Client extends JFrame {
     private void initListener() {  // 事件的实现
         // shortcut
         KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, KeyEvent.CTRL_DOWN_MASK);  // 点击快捷键 Ctrl+Enter，触发事件
-        sqlJTextArea.getInputMap().put(keyStroke, "Execute");
+        sqlJTextArea.getInputMap().put(keyStroke, "Execute");   //  将快捷键和"Execute" 连接到一起
         sqlJTextArea.getActionMap().put("Execute", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String sql = sqlJTextArea.getSelectedText();
-                String output = server.dispatch(sql);
-                if (output != null) {
+                String output = server.dispatch(sql); // 调用dispatch(sql) 判读语句是query(sql)或update(sql)
+                if (output != null) {  // 输出有内容，语句继续拼接
                     outputJTextArea.append(output + "\n");
                 }
                 if (defaultTableModel != null) {
-                    resultJTable.setModel(defaultTableModel);
+                    resultJTable.setModel(defaultTableModel);  // 表格输出内容
+                    TableColumnAdjuster tableColumnAdjuster = new TableColumnAdjuster(resultJTable);  // 调整表格的宽度
+                    tableColumnAdjuster.adjustColumns();
                 }
             }
         });
     }
 
     public static void main(String[] args) {
+
         new Client();
     }
 }

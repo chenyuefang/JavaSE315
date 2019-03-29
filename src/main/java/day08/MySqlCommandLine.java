@@ -142,8 +142,9 @@ public class MySqlCommandLine {
         //  Scanner scanner = new Scanner(System.in);
         //  System.out.println("input SQL statement: ");
         // String sql = scanner.nextLine(); // 在主方法是创建一次，便可直接调用
-        day08.Server mySqlCommandLine = new day08.Server();
+        MySqlCommandLine mySqlCommandLine = new MySqlCommandLine();
         String sql = mySqlCommandLine.getSQL();
+        System.out.println(sql);
         while (!sql.equalsIgnoreCase("quit")) { // 语句若是“quit"，就执行结束，若不是”quit“ ，便继续执行，并显示"mysql> "
             mySqlCommandLine.dispatch(sql);
             sql = mySqlCommandLine.getSQL();
