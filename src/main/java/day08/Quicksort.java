@@ -36,9 +36,8 @@ public class Quicksort { //快速排序  : 重新排序数列，所有比基准�
         }
         // 放置基准值，准备分治递归快排
         int3[left] = pivot;
-       // Quicksort(int3, low, left - 1);
-        //Quicksort(int3, left + 1, high);
-
+                // Quicksort(int3, low, left - 1);
+                 //Quicksort(int3, left + 1, high);
         System.out.println(Arrays.toString(int3));
     }
 
