@@ -9,7 +9,7 @@ public class DB {
 
     public static void main(String[] args) throws SQLException {
         new Driver();
-        JDBC4Connection connection = (JDBC4Connection) DriverManager.getConnection("jdbc:mysql:///?user=root&password=system&useSSL=false");
+        JDBC4Connection connection = (JDBC4Connection) DriverManager.getConnection("jdbc:mysql:///?user=root&password=123456&useSSL=false");
         System.out.println(connection);
 //        PreparedStatement preparedStatement = connection.prepareStatement("");
 //        ResultSet resultSet = preparedStatement.executeQuery();
